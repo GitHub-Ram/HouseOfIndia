@@ -11,7 +11,8 @@ import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 
-class ProductViewModel(private val productRepo: ProductDataSource): ViewModel() {
+class ProductViewModel: ViewModel() {
+    lateinit var productRepo: ProductDataSource
     private lateinit var categoryResponse: MutableLiveData<CategoryResponse?>
     private lateinit var productResponse: MutableLiveData<ProductResponse?>
 

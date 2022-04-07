@@ -1,6 +1,7 @@
 package com.android.houseofindia.network
 
 import android.annotation.SuppressLint
+import com.android.houseofindia.BuildConfig
 import com.google.gson.GsonBuilder
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
@@ -30,10 +31,6 @@ class RestClient {
             )
             .client(SelfSigningClientBuilder().createClient())
             .build()
-    }
-
-    companion object {
-        fun <T> provideAPI(retrofit: Retrofit, type: Class<T>) = retrofit.create(type)
     }
 
     class SelfSigningClientBuilder {
