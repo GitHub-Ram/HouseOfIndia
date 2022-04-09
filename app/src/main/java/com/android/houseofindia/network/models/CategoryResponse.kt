@@ -1,7 +1,7 @@
 package com.android.houseofindia.network.models
 
-import com.google.gson.annotations.SerializedName
 import androidx.annotation.Keep
+import com.google.gson.annotations.SerializedName
 
 @Keep
 data class CategoryResponse(
@@ -15,8 +15,10 @@ data class CategoryResponse(
     @Keep
     data class Category(
         @SerializedName("id")
-        val id: Int? = null,
+        val id: String? = null,
         @SerializedName("name")
-        val name: String? = null
+        val name: String? = null,
+        var isGrid: Boolean = false,
+        var products: List<ProductResponse.ItemLists>? = null
     )
 }

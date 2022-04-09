@@ -10,11 +10,14 @@ import com.android.houseofindia.network.models.ProductResponse
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
+import java.util.concurrent.ConcurrentHashMap
 
-class ProductViewModel: ViewModel() {
+class ProductViewModel : ViewModel() {
     lateinit var productRepo: ProductDataSource
     private lateinit var categoryResponse: MutableLiveData<CategoryResponse?>
     private lateinit var productResponse: MutableLiveData<ProductResponse?>
+    var categories: CategoryResponse? = null
+    var productsMap = ConcurrentHashMap<String, ProductResponse?>()
 
     fun getCategories(): LiveData<CategoryResponse?> {
         categoryResponse = MutableLiveData()
@@ -22,10 +25,27 @@ class ProductViewModel: ViewModel() {
             productRepo.getCategories().catch {
                 categoryResponse.value = null
             }.collect {
-                categoryResponse.value = if(it.code() == 200) it.body() else null
+                val response = if (it.code() == 200) it.body() else null
+                categories = response
+                categoryResponse.value = response
             }
         }
         return categoryResponse
+    }
+
+    fun fetchAllProducts(categoryList: List<CategoryResponse.Category>? = categories?.categoryList) {
+        categoryList?.forEach { category ->
+            category.id?.let { id ->
+                if (!productsMap.contains(id)) {
+                    viewModelScope.launch {
+                        productRepo.getProducts(id).collect {
+                            val response = if (it.code() == 200) it.body() else null
+                            productsMap[id] = response
+                        }
+                    }
+                }
+            }
+        }
     }
 
     fun getProducts(id: String): LiveData<ProductResponse?> {
@@ -34,7 +54,9 @@ class ProductViewModel: ViewModel() {
             productRepo.getProducts(id).catch {
                 productResponse.value = null
             }.collect {
-                productResponse.value = if(it.code() == 200) it.body() else null
+                val response = if (it.code() == 200) it.body() else null
+                productsMap[id] = response
+                productResponse.value = response
             }
         }
         return productResponse

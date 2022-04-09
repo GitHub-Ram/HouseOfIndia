@@ -21,5 +21,5 @@ abstract class BaseFragment<VM: ViewModel?, VB: ViewBinding>: Fragment() {
         return binding?.root
     }
 
-    abstract fun onCreateBinding(inflater: LayoutInflater, container: ViewGroup?): VB
+    protected abstract fun onCreateBinding(inflater: LayoutInflater, container: ViewGroup?): VB
 }
