@@ -73,7 +73,10 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
 
         override fun createFragment(position: Int): Fragment {
             return when (position) {
-                0 -> SplashFragment()
+                0 -> SplashFragment {
+                    if (binding.pager.isUserInputEnabled)
+                        binding.pager.currentItem = 1
+                }
                 1 -> IntroductionFragment(R.mipmap.introduction_1)
                 2 -> IntroductionFragment(R.mipmap.introduction_2)
                 else -> {
