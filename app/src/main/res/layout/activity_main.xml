@@ -3,10 +3,22 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@mipmap/hotel_menu_bg"
+    android:layout_gravity="center"
     tools:context=".MainActivity">
+
+    <VideoView
+        android:id="@+id/video"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginBottom="@dimen/_16sdp"
+        android:layout_marginTop="@dimen/_16sdp"
+        android:layout_marginRight="@dimen/_12sdp"
+        android:layout_marginLeft="@dimen/_12sdp" />
 
     <androidx.viewpager2.widget.ViewPager2
         android:id="@+id/pager"
+        android:visibility="gone"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 

@@ -1,7 +1,10 @@
 package com.android.houseofindia
 
+import android.net.Uri
+import android.opengl.Visibility
 import android.os.Bundle
 import android.view.LayoutInflater
+import android.view.View
 import androidx.activity.viewModels
 import androidx.fragment.app.Fragment
 import androidx.viewpager2.adapter.FragmentStateAdapter
@@ -29,6 +32,14 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        binding?.video?.apply {
+            setVideoURI(Uri.parse("android.resource://" + packageName + "/" + R.raw.splash_video))
+            setOnCompletionListener {
+                binding.pager.visibility = View.VISIBLE
+                binding?.video?.visibility = View.GONE
+            }
+            start()
+        }
         viewModel.productRepo = ProductRepository(HOIConstants.provideAPI(ApiInterface::class.java))
         with(binding.pager) {
             adapter = FoodPagerAdapter()
@@ -36,6 +47,21 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
             isUserInputEnabled = false
         }
         fetchCategories()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        //binding?.video?.start()
+    }
+
+    override fun onPause() {
+        super.onPause()
+        binding?.video?.pause()
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        binding?.video?.stopPlayback()
     }
 
     private fun fetchCategories() {
@@ -69,21 +95,20 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
     inner class FoodPagerAdapter : FragmentStateAdapter(this) {
 
         // TODO: Change below logic
-        override fun getItemCount(): Int = 3 + visibleCategoryIds.size
+        override fun getItemCount(): Int = 2 + visibleCategoryIds.size
 
         override fun createFragment(position: Int): Fragment {
             return when (position) {
-                0 -> SplashFragment()
-                1 -> IntroductionFragment(R.mipmap.introduction_1)
-                2 -> IntroductionFragment(R.mipmap.introduction_2)
+                0 -> IntroductionFragment(R.mipmap.introduction_1)
+                1 -> IntroductionFragment(R.mipmap.introduction_2)
                 else -> {
-                    if (visibleCategoryIds[abs(3 - position)].size == 1) {
+                    if (visibleCategoryIds[abs(2 - position)].size == 1) {
                         categories?.firstOrNull {
-                            it.id == visibleCategoryIds[abs(3 - position)].first()
+                            it.id == visibleCategoryIds[abs(2 - position)].first()
                         }?.let { LinearGridMenuFragment(it) }
                             ?: IntroductionFragment(R.mipmap.introduction_2)
                     } else {
-                        categories?.filter { it.id in visibleCategoryIds[abs(3 - position)] }
+                        categories?.filter { it.id in visibleCategoryIds[abs(2 - position)] }
                             ?.let { groupCategories ->
                                 MultipleMenuFragment(groupCategories)
                             } ?: IntroductionFragment(R.mipmap.introduction_2)
