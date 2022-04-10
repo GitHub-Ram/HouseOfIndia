@@ -9,12 +9,14 @@ import com.android.houseofindia.R
 import com.android.houseofindia.base.BaseFragment
 import com.android.houseofindia.databinding.FragmentSplashBinding
 
-class SplashFragment : BaseFragment<Nothing, FragmentSplashBinding>() {
+class SplashFragment(private val onVideoComplete: () -> Unit) :
+    BaseFragment<Nothing, FragmentSplashBinding>() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding?.video?.apply {
             setVideoURI(Uri.parse("android.resource://" + requireActivity().packageName + "/" + R.raw.splash_video))
+            setOnCompletionListener { onVideoComplete() }
             start()
         }
     }
