@@ -6,6 +6,7 @@ import android.text.Html
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.android.houseofindia.R
 import com.android.houseofindia.base.BaseFragment
 import com.android.houseofindia.databinding.FragmentIntroductionBinding
 
@@ -24,6 +25,9 @@ class IntroductionFragment(private val imageId: Int, private val homeData: Strin
             } else {
                 binding?.homeData?.text = Html.fromHtml(homeData)
             }
+        } else {
+            if (imageId == R.mipmap.hotel_menu_bg)
+                binding?.introImage?.setImageResource(R.mipmap.introduction_2)
         }
     }
 

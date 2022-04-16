@@ -6,6 +6,13 @@
     android:layout_height="wrap_content"
     android:layout_marginBottom="@dimen/_6sdp">
 
+    <Space
+        android:id="@+id/space_start"
+        android:layout_width="@dimen/_8sdp"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <TextView
         android:id="@+id/tv_product"
         android:layout_width="@dimen/_90sdp"
@@ -18,7 +25,7 @@
         android:textSize="@dimen/_9ssp"
         android:textStyle="bold"
         app:layout_constraintHorizontal_bias="0"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintStart_toEndOf="@id/space_start"
         app:layout_constraintTop_toTopOf="parent"
         tools:text="HONEY GARLIC CHICKEN"
         tools:textColor="@color/white" />
@@ -28,7 +35,7 @@
         android:layout_width="@dimen/_10sdp"
         android:layout_height="@dimen/_10sdp"
         android:layout_marginStart="@dimen/_2sdp"
-        android:layout_marginTop="@dimen/_3sdp"
+        android:layout_marginTop="@dimen/_1sdp"
         android:src="@mipmap/veg"
         android:visibility="gone"
         app:layout_constraintStart_toEndOf="@id/tv_product"
@@ -44,14 +51,14 @@
         android:textColor="@color/white"
         android:textSize="@dimen/_9ssp"
         android:textStyle="bold"
-        app:layout_constraintEnd_toStartOf="@id/space"
+        app:layout_constraintEnd_toStartOf="@id/space_end"
         app:layout_constraintTop_toTopOf="@id/tv_product"
         tools:text="250"
         tools:textColor="@color/white" />
 
     <Space
-        android:id="@+id/space"
-        android:layout_width="@dimen/_14sdp"
+        android:id="@+id/space_end"
+        android:layout_width="@dimen/_8sdp"
         android:layout_height="wrap_content"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -61,13 +68,13 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/_2sdp"
-        android:layout_marginEnd="@dimen/_16sdp"
+        android:layout_marginEnd="@dimen/_12sdp"
         android:lineSpacingExtra="@dimen/_2sdp"
         android:textAllCaps="true"
         android:textColor="@color/white"
         android:textSize="@dimen/_5ssp"
         app:layout_constraintEnd_toStartOf="@id/tv_price"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintStart_toStartOf="@id/tv_product"
         app:layout_constraintTop_toBottomOf="@id/tv_product"
         tools:text="Boiled milk with the decoction obtained by brewing finely ground coffee powder in a traditional indian filter"
         tools:textColor="@color/white" />

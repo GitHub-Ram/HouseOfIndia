@@ -21,94 +21,6 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
         listOf("1"), listOf("2"), listOf("3"), listOf("4", "15", "16"),
         listOf("5"), listOf("6"), listOf("7"), listOf("8", "17"), listOf("9")
     )
-    private val fontSizeArray: List<MenuFonts> by lazy {
-        listOf(
-            MenuFonts(
-                "1", listOf(
-                    resources.getDimension(com.intuit.ssp.R.dimen._10ssp),
-                    resources.getDimension(com.intuit.ssp.R.dimen._8ssp),
-                    resources.getDimension(com.intuit.ssp.R.dimen._5ssp)
-                )
-            ),
-            MenuFonts(
-                "2", listOf(
-                    resources.getDimension(com.intuit.ssp.R.dimen._10ssp),
-                    resources.getDimension(com.intuit.ssp.R.dimen._6ssp),
-                    resources.getDimension(com.intuit.ssp.R.dimen._4ssp)
-                )
-            ),
-            MenuFonts(
-                "4", listOf(
-                    resources.getDimension(com.intuit.ssp.R.dimen._12ssp),
-                    resources.getDimension(com.intuit.ssp.R.dimen._10ssp),
-                    resources.getDimension(com.intuit.ssp.R.dimen._3ssp)
-                )
-            ),
-            MenuFonts(
-                "8", listOf(
-                    resources.getDimension(com.intuit.ssp.R.dimen._12ssp),
-                    resources.getDimension(com.intuit.ssp.R.dimen._10ssp),
-                    resources.getDimension(com.intuit.ssp.R.dimen._2ssp)
-                )
-            ),
-            MenuFonts(
-                "9", listOf(
-                    resources.getDimension(com.intuit.ssp.R.dimen._12ssp),
-                    resources.getDimension(com.intuit.ssp.R.dimen._10ssp),
-                    resources.getDimension(com.intuit.ssp.R.dimen._2ssp)
-                )
-            ),
-            MenuFonts(
-                "15", listOf(
-                    resources.getDimension(com.intuit.ssp.R.dimen._12ssp),
-                    resources.getDimension(com.intuit.ssp.R.dimen._10ssp),
-                    resources.getDimension(com.intuit.ssp.R.dimen._2ssp)
-                )
-            ),
-            MenuFonts(
-                "3", listOf(
-                    resources.getDimension(com.intuit.ssp.R.dimen._10ssp),
-                    resources.getDimension(com.intuit.ssp.R.dimen._8ssp),
-                    resources.getDimension(com.intuit.ssp.R.dimen._5ssp)
-                )
-            ),
-            MenuFonts(
-                "5", listOf(
-                    resources.getDimension(com.intuit.ssp.R.dimen._10ssp),
-                    resources.getDimension(com.intuit.ssp.R.dimen._6ssp),
-                    resources.getDimension(com.intuit.ssp.R.dimen._4ssp)
-                )
-            ),
-            MenuFonts(
-                "6", listOf(
-                    resources.getDimension(com.intuit.ssp.R.dimen._12ssp),
-                    resources.getDimension(com.intuit.ssp.R.dimen._10ssp),
-                    resources.getDimension(com.intuit.ssp.R.dimen._3ssp)
-                )
-            ),
-            MenuFonts(
-                "7", listOf(
-                    resources.getDimension(com.intuit.ssp.R.dimen._12ssp),
-                    resources.getDimension(com.intuit.ssp.R.dimen._10ssp),
-                    resources.getDimension(com.intuit.ssp.R.dimen._2ssp)
-                )
-            ),
-            MenuFonts(
-                "16", listOf(
-                    resources.getDimension(com.intuit.ssp.R.dimen._12ssp),
-                    resources.getDimension(com.intuit.ssp.R.dimen._10ssp),
-                    resources.getDimension(com.intuit.ssp.R.dimen._2ssp)
-                )
-            ),
-            MenuFonts(
-                "17", listOf(
-                    resources.getDimension(com.intuit.ssp.R.dimen._12ssp),
-                    resources.getDimension(com.intuit.ssp.R.dimen._10ssp),
-                    resources.getDimension(com.intuit.ssp.R.dimen._2ssp)
-                )
-            )
-        )
-    }
     private val viewModel: ProductViewModel by viewModels()
     private var categories: List<CategoryResponse.Category>? = null
     private var homeData: String? = null
@@ -185,18 +97,12 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
                         categories?.firstOrNull {
                             it.id == visibleCategoryIds[abs(3 - position)].first()
                         }?.let {
-                            LinearGridMenuFragment(
-                                it,
-                                fontSizeArray.first { f -> f.id == it.id }.fontSizes
-                            )
+                            LinearGridMenuFragment(it)
                         } ?: IntroductionFragment(R.mipmap.introduction_1)
                     } else {
                         categories?.filter { it.id in visibleCategoryIds[abs(3 - position)] }
                             ?.let { groupCategories ->
-                                MultipleMenuFragment(
-                                    groupCategories,
-                                    fontSizeArray.last().fontSizes
-                                )
+                                MultipleMenuFragment(groupCategories)
                             } ?: IntroductionFragment(R.mipmap.introduction_1)
                     }
                 }

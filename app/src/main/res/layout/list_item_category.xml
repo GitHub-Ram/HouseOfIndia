@@ -4,12 +4,22 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginTop="@dimen/_14sdp">
+    android:layout_marginTop="@dimen/_11sdp">
+
+<!--    <View-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="0dp"-->
+<!--        android:background="@drawable/dash_bg"-->
+<!--        android:layout_marginStart="@dimen/_12sdp"-->
+<!--        android:layout_marginTop="@dimen/_6sdp"-->
+<!--        android:layout_marginEnd="@dimen/_12sdp"-->
+<!--        app:layout_constraintBottom_toBottomOf="@id/rv_products"-->
+<!--        app:layout_constraintTop_toTopOf="@id/tv_category" />-->
 
     <ImageView
         android:id="@+id/icon_category_start"
-        android:layout_width="@dimen/_24sdp"
-        android:layout_height="@dimen/_24sdp"
+        android:layout_width="@dimen/_18sdp"
+        android:layout_height="@dimen/_18sdp"
         android:layout_marginEnd="@dimen/_12sdp"
         android:src="@mipmap/category_design"
         app:layout_constraintBottom_toBottomOf="@id/tv_category"
@@ -22,7 +32,7 @@
         android:layout_height="wrap_content"
         android:textAllCaps="true"
         android:textColor="@color/yellow"
-        android:textSize="@dimen/_14ssp"
+        android:textSize="@dimen/_9ssp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -30,8 +40,8 @@
 
     <ImageView
         android:id="@+id/icon_category_end"
-        android:layout_width="@dimen/_24sdp"
-        android:layout_height="@dimen/_24sdp"
+        android:layout_width="@dimen/_18sdp"
+        android:layout_height="@dimen/_18sdp"
         android:layout_marginStart="@dimen/_12sdp"
         android:rotation="180"
         android:src="@mipmap/category_design"
