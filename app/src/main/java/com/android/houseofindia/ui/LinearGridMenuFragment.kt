@@ -11,7 +11,7 @@ import com.android.houseofindia.databinding.FragmentHotelMenuBinding
 import com.android.houseofindia.network.models.CategoryResponse
 import com.android.houseofindia.network.models.ProductResponse
 
-class LinearGridMenuFragment(private val category: CategoryResponse.Category) :
+class LinearGridMenuFragment(private val category: CategoryResponse.Category,private val textSizes: List<Float>) :
     HotelMenuFragment<FragmentHotelMenuBinding>() {
 
     override fun onCreateBinding(
@@ -34,7 +34,9 @@ class LinearGridMenuFragment(private val category: CategoryResponse.Category) :
 
     override fun onMenuLoad(productResponse: ProductResponse?) {
         productResponse?.itemLists?.run {
-            if (isNotEmpty()) binding?.menuList?.adapter = HotelMenuAdapter(this, category.isGrid)
+            if (isNotEmpty()) binding?.menuList?.adapter = HotelMenuAdapter(this, category.isGrid,textSizes)
         }
     }
+
+
 }

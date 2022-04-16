@@ -10,6 +10,10 @@ class ProductRepository(private val apiInterface: ApiInterface) : ProductDataSou
         emit(apiInterface.getCategories())
     }.flowOn(Dispatchers.IO)
 
+    override suspend fun getHomeData() = flow {
+        emit(apiInterface.getHomeData())
+    }.flowOn(Dispatchers.IO)
+
     override suspend fun getProducts(id: String) = flow {
         emit(apiInterface.getProducts(id))
     }.flowOn(Dispatchers.IO)

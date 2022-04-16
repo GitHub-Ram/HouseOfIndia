@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">HouseOfIndia</string>
+    <string name="app_name">HOI</string>
     <string name="introduction">Introduction</string>
     <string name="hotel_menu">Hotel Menu</string>
 </resources>

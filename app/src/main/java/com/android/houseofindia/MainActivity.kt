@@ -1,7 +1,6 @@
 package com.android.houseofindia
 
 import android.net.Uri
-import android.opengl.Visibility
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -13,10 +12,7 @@ import com.android.houseofindia.databinding.ActivityMainBinding
 import com.android.houseofindia.network.ApiInterface
 import com.android.houseofindia.network.ProductRepository
 import com.android.houseofindia.network.models.CategoryResponse
-import com.android.houseofindia.ui.IntroductionFragment
-import com.android.houseofindia.ui.LinearGridMenuFragment
-import com.android.houseofindia.ui.MultipleMenuFragment
-import com.android.houseofindia.ui.SplashFragment
+import com.android.houseofindia.ui.*
 import com.wajahatkarim3.easyflipviewpager.BookFlipPageTransformer2
 import kotlin.math.abs
 
@@ -27,11 +23,34 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
         listOf("1"), listOf("2"), listOf("3"), listOf("4", "15", "16"),
         listOf("5"), listOf("6"), listOf("7"), listOf("8", "17"), listOf("9")
     )
+    private lateinit var linearMenuTextSizeArray: Array<List<Float>>
+    private lateinit var gridMenuTextSizeArray: Array<List<Float>>
+
     private val viewModel: ProductViewModel by viewModels()
     private var categories: List<CategoryResponse.Category>? = null
+    private var homeData: String? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        linearMenuTextSizeArray = arrayOf(
+            listOf(resources.getDimension(com.intuit.ssp.R.dimen._10ssp),resources.getDimension(com.intuit.ssp.R.dimen._8ssp),resources.getDimension(com.intuit.ssp.R.dimen._5ssp)),
+            listOf(resources.getDimension(com.intuit.ssp.R.dimen._10ssp),resources.getDimension(com.intuit.ssp.R.dimen._6ssp),resources.getDimension(com.intuit.ssp.R.dimen._4ssp)),
+            listOf(resources.getDimension(com.intuit.ssp.R.dimen._12ssp),resources.getDimension(com.intuit.ssp.R.dimen._10ssp),resources.getDimension(com.intuit.ssp.R.dimen._3ssp)),
+            listOf(resources.getDimension(com.intuit.ssp.R.dimen._12ssp),resources.getDimension(com.intuit.ssp.R.dimen._10ssp),resources.getDimension(com.intuit.ssp.R.dimen._2ssp)),
+            listOf(resources.getDimension(com.intuit.ssp.R.dimen._12ssp),resources.getDimension(com.intuit.ssp.R.dimen._10ssp),resources.getDimension(com.intuit.ssp.R.dimen._2ssp)),
+            listOf(resources.getDimension(com.intuit.ssp.R.dimen._12ssp),resources.getDimension(com.intuit.ssp.R.dimen._10ssp),resources.getDimension(com.intuit.ssp.R.dimen._2ssp))
+        )
+
+        gridMenuTextSizeArray = arrayOf(
+            listOf(resources.getDimension(com.intuit.ssp.R.dimen._10ssp),resources.getDimension(com.intuit.ssp.R.dimen._8ssp),resources.getDimension(com.intuit.ssp.R.dimen._5ssp)),
+            listOf(resources.getDimension(com.intuit.ssp.R.dimen._10ssp),resources.getDimension(com.intuit.ssp.R.dimen._6ssp),resources.getDimension(com.intuit.ssp.R.dimen._4ssp)),
+            listOf(resources.getDimension(com.intuit.ssp.R.dimen._12ssp),resources.getDimension(com.intuit.ssp.R.dimen._10ssp),resources.getDimension(com.intuit.ssp.R.dimen._3ssp)),
+            listOf(resources.getDimension(com.intuit.ssp.R.dimen._12ssp),resources.getDimension(com.intuit.ssp.R.dimen._10ssp),resources.getDimension(com.intuit.ssp.R.dimen._2ssp)),
+            listOf(resources.getDimension(com.intuit.ssp.R.dimen._12ssp),resources.getDimension(com.intuit.ssp.R.dimen._10ssp),resources.getDimension(com.intuit.ssp.R.dimen._2ssp)),
+            listOf(resources.getDimension(com.intuit.ssp.R.dimen._12ssp),resources.getDimension(com.intuit.ssp.R.dimen._10ssp),resources.getDimension(com.intuit.ssp.R.dimen._2ssp))
+        )
+
         binding?.video?.apply {
             setVideoURI(Uri.parse("android.resource://" + packageName + "/" + R.raw.splash_video))
             setOnCompletionListener {
@@ -47,6 +66,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
             isUserInputEnabled = false
         }
         fetchCategories()
+        fetchHomeData()
     }
 
     override fun onResume() {
@@ -62,6 +82,16 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
     override fun onDestroy() {
         super.onDestroy()
         binding?.video?.stopPlayback()
+    }
+
+    private fun fetchHomeData() {
+        viewModel.getHomeData().observe(this) {
+            // TODO: Hide Progress Bar
+            if (it?.success == true && it.data?.isNullOrEmpty() == false) {
+                binding.pager.isUserInputEnabled = true
+                homeData = it.data
+            }
+        }
     }
 
     private fun fetchCategories() {
@@ -95,7 +125,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
     inner class FoodPagerAdapter : FragmentStateAdapter(this) {
 
         // TODO: Change below logic
-        override fun getItemCount(): Int = 2 + visibleCategoryIds.size
+        override fun getItemCount(): Int = 3 + visibleCategoryIds.size
 
         override fun createFragment(position: Int): Fragment {
             return when (position) {
@@ -105,19 +135,24 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
                 //}
                 //1 -> IntroductionFragment(R.mipmap.introduction_1)
                 //2 -> IntroductionFragment(R.mipmap.introduction_2)
-                0 -> IntroductionFragment(R.mipmap.introduction_1)
-                1 -> IntroductionFragment(R.mipmap.introduction_2)
+                0 -> IntroductionFragment(R.mipmap.introduction_1,"")
+                1 -> {
+                    val homeDataNew : String = if (homeData.isNullOrEmpty()){""} else  homeData!!
+                    IntroductionFragment(R.mipmap.hotel_menu_bg,homeDataNew)
+                }
                 else -> {
-                    if (visibleCategoryIds[abs(2 - position)].size == 1) {
+                    if (position == 2 + visibleCategoryIds.size){
+                        FormFragment()
+                    }else if (visibleCategoryIds[abs(2 - position)].size == 1) {
                         categories?.firstOrNull {
                             it.id == visibleCategoryIds[abs(2 - position)].first()
-                        }?.let { LinearGridMenuFragment(it) }
-                            ?: IntroductionFragment(R.mipmap.introduction_2)
+                        }?.let { LinearGridMenuFragment(it,linearMenuTextSizeArray[abs(2 - position)]) }
+                            ?: IntroductionFragment(R.mipmap.introduction_2,"")
                     } else {
                         categories?.filter { it.id in visibleCategoryIds[abs(2 - position)] }
                             ?.let { groupCategories ->
-                                MultipleMenuFragment(groupCategories)
-                            } ?: IntroductionFragment(R.mipmap.introduction_2)
+                                MultipleMenuFragment(groupCategories,gridMenuTextSizeArray[abs(2 - position)])
+                            } ?: IntroductionFragment(R.mipmap.introduction_2,"")
                     }
                 }
             }

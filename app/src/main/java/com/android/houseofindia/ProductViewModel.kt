@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.android.houseofindia.network.ProductDataSource
 import com.android.houseofindia.network.models.CategoryResponse
+import com.android.houseofindia.network.models.HomeDataResponse
 import com.android.houseofindia.network.models.ProductResponse
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.collect
@@ -16,7 +17,10 @@ class ProductViewModel : ViewModel() {
     lateinit var productRepo: ProductDataSource
     private lateinit var categoryResponse: MutableLiveData<CategoryResponse?>
     private lateinit var productResponse: MutableLiveData<ProductResponse?>
+    private lateinit var homeDataResponse: MutableLiveData<HomeDataResponse?>
+
     var categories: CategoryResponse? = null
+    var homeData: HomeDataResponse? = null
     var productsMap = ConcurrentHashMap<String, ProductResponse?>()
 
     fun getCategories(): LiveData<CategoryResponse?> {
@@ -31,6 +35,20 @@ class ProductViewModel : ViewModel() {
             }
         }
         return categoryResponse
+    }
+
+    fun getHomeData(): LiveData<HomeDataResponse?> {
+        homeDataResponse = MutableLiveData()
+        viewModelScope.launch {
+            productRepo.getHomeData().catch {
+                homeDataResponse.value = null
+            }.collect {
+                val response = if (it.code() == 200) it.body() else null
+                homeData = response
+                homeDataResponse.value = response
+            }
+        }
+        return homeDataResponse
     }
 
     fun fetchAllProducts(categoryList: List<CategoryResponse.Category>? = categories?.categoryList) {
