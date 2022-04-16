@@ -79,7 +79,7 @@ class HotelMenuAdapter(
                     val bottomMargin = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_PX, textSizes[2], r.displayMetrics)
                     layoutParam.setMargins(layoutParam.leftMargin, layoutParam.topMargin, layoutParam.rightMargin,
                         bottomMargin.toInt()
-                    );
+                    )
                 }
                 else -> {}
             }

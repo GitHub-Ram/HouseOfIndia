@@ -2,4 +2,5 @@
     <string name="app_name">HOI</string>
     <string name="introduction">Introduction</string>
     <string name="hotel_menu">Hotel Menu</string>
+    <string name="splash">Splash</string>
 </resources>

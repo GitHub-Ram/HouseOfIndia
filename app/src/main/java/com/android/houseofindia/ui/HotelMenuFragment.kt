@@ -1,9 +1,7 @@
 package com.android.houseofindia.ui
 
-import android.util.TypedValue
 import androidx.viewbinding.ViewBinding
 import com.android.houseofindia.ProductViewModel
-import com.android.houseofindia.R
 import com.android.houseofindia.base.BaseFragment
 import com.android.houseofindia.network.models.ProductResponse
 

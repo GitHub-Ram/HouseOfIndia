@@ -1,9 +1,7 @@
 package com.android.houseofindia
 
-import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
-import android.view.View
 import androidx.activity.viewModels
 import androidx.fragment.app.Fragment
 import androidx.viewpager2.adapter.FragmentStateAdapter
@@ -23,42 +21,100 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
         listOf("1"), listOf("2"), listOf("3"), listOf("4", "15", "16"),
         listOf("5"), listOf("6"), listOf("7"), listOf("8", "17"), listOf("9")
     )
-    private lateinit var linearMenuTextSizeArray: Array<List<Float>>
-    private lateinit var gridMenuTextSizeArray: Array<List<Float>>
-
+    private val fontSizeArray: List<MenuFonts> by lazy {
+        listOf(
+            MenuFonts(
+                "1", listOf(
+                    resources.getDimension(com.intuit.ssp.R.dimen._10ssp),
+                    resources.getDimension(com.intuit.ssp.R.dimen._8ssp),
+                    resources.getDimension(com.intuit.ssp.R.dimen._5ssp)
+                )
+            ),
+            MenuFonts(
+                "2", listOf(
+                    resources.getDimension(com.intuit.ssp.R.dimen._10ssp),
+                    resources.getDimension(com.intuit.ssp.R.dimen._6ssp),
+                    resources.getDimension(com.intuit.ssp.R.dimen._4ssp)
+                )
+            ),
+            MenuFonts(
+                "4", listOf(
+                    resources.getDimension(com.intuit.ssp.R.dimen._12ssp),
+                    resources.getDimension(com.intuit.ssp.R.dimen._10ssp),
+                    resources.getDimension(com.intuit.ssp.R.dimen._3ssp)
+                )
+            ),
+            MenuFonts(
+                "8", listOf(
+                    resources.getDimension(com.intuit.ssp.R.dimen._12ssp),
+                    resources.getDimension(com.intuit.ssp.R.dimen._10ssp),
+                    resources.getDimension(com.intuit.ssp.R.dimen._2ssp)
+                )
+            ),
+            MenuFonts(
+                "9", listOf(
+                    resources.getDimension(com.intuit.ssp.R.dimen._12ssp),
+                    resources.getDimension(com.intuit.ssp.R.dimen._10ssp),
+                    resources.getDimension(com.intuit.ssp.R.dimen._2ssp)
+                )
+            ),
+            MenuFonts(
+                "15", listOf(
+                    resources.getDimension(com.intuit.ssp.R.dimen._12ssp),
+                    resources.getDimension(com.intuit.ssp.R.dimen._10ssp),
+                    resources.getDimension(com.intuit.ssp.R.dimen._2ssp)
+                )
+            ),
+            MenuFonts(
+                "3", listOf(
+                    resources.getDimension(com.intuit.ssp.R.dimen._10ssp),
+                    resources.getDimension(com.intuit.ssp.R.dimen._8ssp),
+                    resources.getDimension(com.intuit.ssp.R.dimen._5ssp)
+                )
+            ),
+            MenuFonts(
+                "5", listOf(
+                    resources.getDimension(com.intuit.ssp.R.dimen._10ssp),
+                    resources.getDimension(com.intuit.ssp.R.dimen._6ssp),
+                    resources.getDimension(com.intuit.ssp.R.dimen._4ssp)
+                )
+            ),
+            MenuFonts(
+                "6", listOf(
+                    resources.getDimension(com.intuit.ssp.R.dimen._12ssp),
+                    resources.getDimension(com.intuit.ssp.R.dimen._10ssp),
+                    resources.getDimension(com.intuit.ssp.R.dimen._3ssp)
+                )
+            ),
+            MenuFonts(
+                "7", listOf(
+                    resources.getDimension(com.intuit.ssp.R.dimen._12ssp),
+                    resources.getDimension(com.intuit.ssp.R.dimen._10ssp),
+                    resources.getDimension(com.intuit.ssp.R.dimen._2ssp)
+                )
+            ),
+            MenuFonts(
+                "16", listOf(
+                    resources.getDimension(com.intuit.ssp.R.dimen._12ssp),
+                    resources.getDimension(com.intuit.ssp.R.dimen._10ssp),
+                    resources.getDimension(com.intuit.ssp.R.dimen._2ssp)
+                )
+            ),
+            MenuFonts(
+                "17", listOf(
+                    resources.getDimension(com.intuit.ssp.R.dimen._12ssp),
+                    resources.getDimension(com.intuit.ssp.R.dimen._10ssp),
+                    resources.getDimension(com.intuit.ssp.R.dimen._2ssp)
+                )
+            )
+        )
+    }
     private val viewModel: ProductViewModel by viewModels()
     private var categories: List<CategoryResponse.Category>? = null
     private var homeData: String? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-        linearMenuTextSizeArray = arrayOf(
-            listOf(resources.getDimension(com.intuit.ssp.R.dimen._10ssp),resources.getDimension(com.intuit.ssp.R.dimen._8ssp),resources.getDimension(com.intuit.ssp.R.dimen._5ssp)),
-            listOf(resources.getDimension(com.intuit.ssp.R.dimen._10ssp),resources.getDimension(com.intuit.ssp.R.dimen._6ssp),resources.getDimension(com.intuit.ssp.R.dimen._4ssp)),
-            listOf(resources.getDimension(com.intuit.ssp.R.dimen._12ssp),resources.getDimension(com.intuit.ssp.R.dimen._10ssp),resources.getDimension(com.intuit.ssp.R.dimen._3ssp)),
-            listOf(resources.getDimension(com.intuit.ssp.R.dimen._12ssp),resources.getDimension(com.intuit.ssp.R.dimen._10ssp),resources.getDimension(com.intuit.ssp.R.dimen._2ssp)),
-            listOf(resources.getDimension(com.intuit.ssp.R.dimen._12ssp),resources.getDimension(com.intuit.ssp.R.dimen._10ssp),resources.getDimension(com.intuit.ssp.R.dimen._2ssp)),
-            listOf(resources.getDimension(com.intuit.ssp.R.dimen._12ssp),resources.getDimension(com.intuit.ssp.R.dimen._10ssp),resources.getDimension(com.intuit.ssp.R.dimen._2ssp))
-        )
-
-        gridMenuTextSizeArray = arrayOf(
-            listOf(resources.getDimension(com.intuit.ssp.R.dimen._10ssp),resources.getDimension(com.intuit.ssp.R.dimen._8ssp),resources.getDimension(com.intuit.ssp.R.dimen._5ssp)),
-            listOf(resources.getDimension(com.intuit.ssp.R.dimen._10ssp),resources.getDimension(com.intuit.ssp.R.dimen._6ssp),resources.getDimension(com.intuit.ssp.R.dimen._4ssp)),
-            listOf(resources.getDimension(com.intuit.ssp.R.dimen._12ssp),resources.getDimension(com.intuit.ssp.R.dimen._10ssp),resources.getDimension(com.intuit.ssp.R.dimen._3ssp)),
-            listOf(resources.getDimension(com.intuit.ssp.R.dimen._12ssp),resources.getDimension(com.intuit.ssp.R.dimen._10ssp),resources.getDimension(com.intuit.ssp.R.dimen._2ssp)),
-            listOf(resources.getDimension(com.intuit.ssp.R.dimen._12ssp),resources.getDimension(com.intuit.ssp.R.dimen._10ssp),resources.getDimension(com.intuit.ssp.R.dimen._2ssp)),
-            listOf(resources.getDimension(com.intuit.ssp.R.dimen._12ssp),resources.getDimension(com.intuit.ssp.R.dimen._10ssp),resources.getDimension(com.intuit.ssp.R.dimen._2ssp))
-        )
-
-        binding?.video?.apply {
-            setVideoURI(Uri.parse("android.resource://" + packageName + "/" + R.raw.splash_video))
-            setOnCompletionListener {
-                binding.pager.visibility = View.VISIBLE
-                binding?.video?.visibility = View.GONE
-            }
-            start()
-        }
         viewModel.productRepo = ProductRepository(HOIConstants.provideAPI(ApiInterface::class.java))
         with(binding.pager) {
             adapter = FoodPagerAdapter()
@@ -69,25 +125,10 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
         fetchHomeData()
     }
 
-    override fun onResume() {
-        super.onResume()
-        //binding?.video?.start()
-    }
-
-    override fun onPause() {
-        super.onPause()
-        binding?.video?.pause()
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        binding?.video?.stopPlayback()
-    }
-
     private fun fetchHomeData() {
         viewModel.getHomeData().observe(this) {
             // TODO: Hide Progress Bar
-            if (it?.success == true && it.data?.isNullOrEmpty() == false) {
+            if (it?.success == true && it.data != null && it.data.isNotEmpty()) {
                 binding.pager.isUserInputEnabled = true
                 homeData = it.data
             }
@@ -125,34 +166,38 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
     inner class FoodPagerAdapter : FragmentStateAdapter(this) {
 
         // TODO: Change below logic
-        override fun getItemCount(): Int = 3 + visibleCategoryIds.size
+        override fun getItemCount(): Int = 4 + visibleCategoryIds.size
 
         override fun createFragment(position: Int): Fragment {
             return when (position) {
-				//0 -> SplashFragment {
-                //    if (binding.pager.isUserInputEnabled)
-                //        binding.pager.currentItem = 1
-                //}
-                //1 -> IntroductionFragment(R.mipmap.introduction_1)
-                //2 -> IntroductionFragment(R.mipmap.introduction_2)
-                0 -> IntroductionFragment(R.mipmap.introduction_1,"")
-                1 -> {
-                    val homeDataNew : String = if (homeData.isNullOrEmpty()){""} else  homeData!!
-                    IntroductionFragment(R.mipmap.hotel_menu_bg,homeDataNew)
+                0 -> SplashFragment {
+                    VideoViewerFragment().show(supportFragmentManager, "SplashVideo")
                 }
+                1 -> IntroductionFragment(R.mipmap.introduction_1)
+                2 -> IntroductionFragment(
+                    R.mipmap.hotel_menu_bg,
+                    homeData
+                ) // TODO: Change background image
                 else -> {
-                    if (position == 2 + visibleCategoryIds.size){
+                    if (position == 3 + visibleCategoryIds.size) {
                         FormFragment()
-                    }else if (visibleCategoryIds[abs(2 - position)].size == 1) {
+                    } else if (visibleCategoryIds[abs(3 - position)].size == 1) {
                         categories?.firstOrNull {
-                            it.id == visibleCategoryIds[abs(2 - position)].first()
-                        }?.let { LinearGridMenuFragment(it,linearMenuTextSizeArray[abs(2 - position)]) }
-                            ?: IntroductionFragment(R.mipmap.introduction_2,"")
+                            it.id == visibleCategoryIds[abs(3 - position)].first()
+                        }?.let {
+                            LinearGridMenuFragment(
+                                it,
+                                fontSizeArray.first { f -> f.id == it.id }.fontSizes
+                            )
+                        } ?: IntroductionFragment(R.mipmap.introduction_1)
                     } else {
-                        categories?.filter { it.id in visibleCategoryIds[abs(2 - position)] }
+                        categories?.filter { it.id in visibleCategoryIds[abs(3 - position)] }
                             ?.let { groupCategories ->
-                                MultipleMenuFragment(groupCategories,gridMenuTextSizeArray[abs(2 - position)])
-                            } ?: IntroductionFragment(R.mipmap.introduction_2,"")
+                                MultipleMenuFragment(
+                                    groupCategories,
+                                    fontSizeArray.last().fontSizes
+                                )
+                            } ?: IntroductionFragment(R.mipmap.introduction_1)
                     }
                 }
             }
