@@ -13,7 +13,8 @@ import com.android.houseofindia.network.models.ProductResponse
 
 class LinearGridMenuFragment(
     private val category: CategoryResponse.Category,
-    private val textSizes: List<Float>
+    private val textSizes: List<Float>,
+    private val backImage : Int
 ) : HotelMenuFragment<FragmentHotelMenuBinding>() {
 
     override fun onCreateBinding(
@@ -27,6 +28,7 @@ class LinearGridMenuFragment(
         super.onViewCreated(view, savedInstanceState)
         productViewModel = (requireActivity() as MainActivity).getProductViewModel()
         binding?.apply {
+            parent.setBackgroundResource(backImage)
             tvCategory.text = category.name
             menuList.layoutManager = if (category.isGrid) GridLayoutManager(requireContext(), 2)
             else LinearLayoutManager(requireContext())

@@ -1,10 +1,12 @@
 package com.android.houseofindia
 
+import android.media.MediaPlayer
 import android.os.Bundle
 import android.view.LayoutInflater
 import androidx.activity.viewModels
 import androidx.fragment.app.Fragment
 import androidx.viewpager2.adapter.FragmentStateAdapter
+import androidx.viewpager2.widget.ViewPager2.OnPageChangeCallback
 import com.android.houseofindia.base.BaseActivity
 import com.android.houseofindia.databinding.ActivityMainBinding
 import com.android.houseofindia.network.ApiInterface
@@ -17,6 +19,7 @@ import kotlin.math.abs
 class MainActivity : BaseActivity<ActivityMainBinding>() {
     private val linearMenuIdArray = arrayOf("1", "2", "4", "8", "9", "15")
     private val gridMenuIdArray = arrayOf("3", "5", "6", "7", "16", "17")
+    private val backImageArray = arrayOf(0,0,0,R.mipmap.hotel_menu_bg,R.mipmap.drinks_background,R.mipmap.appitizer_background,R.mipmap.tandoor_background,R.mipmap.background,R.mipmap.background,R.mipmap.breads_background,0,0,0,0,0)
     private val visibleCategoryIds = arrayOf(
         listOf("1"), listOf("2"), listOf("3"), listOf("4", "15", "16"),
         listOf("5"), listOf("6"), listOf("7"), listOf("8", "17"), listOf("9")
@@ -120,6 +123,25 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
             adapter = FoodPagerAdapter()
             setPageTransformer(BookFlipPageTransformer2())
             isUserInputEnabled = false
+            registerOnPageChangeCallback(object : OnPageChangeCallback() {
+                override fun onPageScrolled(
+                    position: Int,
+                    positionOffset: Float,
+                    positionOffsetPixels: Int
+                ) {
+                    super.onPageScrolled(position, positionOffset, positionOffsetPixels)
+                }
+
+                override fun onPageSelected(position: Int) {
+                    super.onPageSelected(position)
+                    val mPlayer: MediaPlayer = MediaPlayer.create(this@MainActivity,R.raw.page_flip)
+                    mPlayer.start()
+                }
+
+                override fun onPageScrollStateChanged(state: Int) {
+                    super.onPageScrollStateChanged(state)
+                }
+            })
         }
         fetchCategories()
         fetchHomeData()
@@ -187,7 +209,8 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
                         }?.let {
                             LinearGridMenuFragment(
                                 it,
-                                fontSizeArray.first { f -> f.id == it.id }.fontSizes
+                                fontSizeArray.first { f -> f.id == it.id }.fontSizes,
+                                backImageArray[position]
                             )
                         } ?: IntroductionFragment(R.mipmap.introduction_1)
                     } else {
@@ -195,7 +218,8 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
                             ?.let { groupCategories ->
                                 MultipleMenuFragment(
                                     groupCategories,
-                                    fontSizeArray.last().fontSizes
+                                    fontSizeArray.last().fontSizes,
+                                    backImageArray[position]
                                 )
                             } ?: IntroductionFragment(R.mipmap.introduction_1)
                     }

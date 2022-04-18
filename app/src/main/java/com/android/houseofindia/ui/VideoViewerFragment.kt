@@ -31,7 +31,7 @@ class VideoViewerFragment() : DialogFragment() {
         foodVideo = view.findViewById(R.id.video)
         view.findViewById<ImageView>(R.id.iv_close).setOnClickListener { dismiss() }
         foodVideo?.apply {
-            setVideoURI(Uri.parse("android.resource://" + requireActivity().packageName + "/" + R.raw.hoi))
+            setVideoURI(Uri.parse("android.resource://" + requireActivity().packageName + "/" + R.raw.video))
             start()
         }
     }

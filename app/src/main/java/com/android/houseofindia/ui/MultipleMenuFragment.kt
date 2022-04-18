@@ -9,7 +9,7 @@ import com.android.houseofindia.databinding.FragmentMultipleMenuBinding
 import com.android.houseofindia.network.models.CategoryResponse
 import com.android.houseofindia.network.models.ProductResponse
 
-class MultipleMenuFragment(private val categories: List<CategoryResponse.Category>,private val textSizes: List<Float>) :
+class MultipleMenuFragment(private val categories: List<CategoryResponse.Category>,private val textSizes: List<Float>,private val backImageResId : Int) :
     HotelMenuFragment<FragmentMultipleMenuBinding>() {
 
     override fun onCreateBinding(
@@ -23,6 +23,7 @@ class MultipleMenuFragment(private val categories: List<CategoryResponse.Categor
         super.onViewCreated(view, savedInstanceState)
         productViewModel = (requireActivity() as MainActivity).getProductViewModel()
         binding?.apply {
+            backImage.setImageResource(backImageResId)
             categories.forEach {
                 it.products = productViewModel?.productsMap?.get(it.id)?.itemLists
             }

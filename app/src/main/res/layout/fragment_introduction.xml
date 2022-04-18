@@ -17,9 +17,10 @@
         android:id="@+id/godImage"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="@dimen/_25sdp"
         android:src="@drawable/hoi"
-        android:visibility="gone"
+        android:layout_marginBottom="@dimen/_10sdp"
+        android:scaleType="center"
+        android:visibility="visible"
         app:layout_constraintBottom_toTopOf="@+id/homeData"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent" />
@@ -31,10 +32,8 @@
         android:layout_marginStart="@dimen/_12sdp"
         android:layout_marginEnd="@dimen/_12sdp"
         android:gravity="center"
-        android:lineSpacingExtra="@dimen/_12sdp"
         android:textColor="@color/white"
         android:textSize="@dimen/_11ssp"
-        android:textStyle="bold"
         android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
